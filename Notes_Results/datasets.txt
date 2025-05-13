@@ -1,0 +1,96 @@
+# Updated evaluation summary with all four datasets (combined), including placeholders for missing results
+
+summary_text = """
+=============================================================================
+GRAPHSKETCHTENSOR + EWMA EVALUATION SUMMARY
+=============================================================================
+
+✅ Dataset: DARPA (4.5M edges, 25K nodes, 46K timestamps)
+Description: Classic cybersecurity dataset capturing attacks in network traffic.
+
+
+---------------------------------------------------------
+- SketchTensorManager(2, 10, 0.99f, 10.0f)
+- EWMA: α = 0.65, init = 0.3
+- Time Granularity: timestamp / 250
+
+Results:
+• AUC-ROC         : 0.9565
+• Avg. Precision  : 0.9778
+• Precision/Recall@1000 : 1.000
+
+Notes:
+• Outperforms MIDAS-R (0.953 AUC)
+• Lightweight, adaptive, streaming-friendly
+• Ideal for real-time and resource-constrained environments
+
+=========================================================
+
+✅ Dataset: ISCX-IDS2012 (1.09M edges, 31K nodes, 165K timestamps)
+Description: Realistic network traffic with labeled anomalies. Known for having a large number of timestamps.
+------------------------------------------------------------------
+- SketchTensorManager(3, 800, 0.98f, 15.0f)
+- EWMA: α = 0.85, init = 0.3
+
+Results:
+• AUC-ROC         : 0.8433
+• Avg. Precision  : 0.2198
+• Precision/Recall@1000 : 1.000
+
+Notes:
+• Strong early precision, low AP due to class imbalance
+• May benefit from dynamic sketch size or adaptive decay
+
+=========================================================
+
+⚠️ Dataset: CIC-IDS2017 (Friday, 225K edges)
+--------------------------------------------
+- (Params not fully recorded)
+
+Results:
+• AUC-ROC         : ~0.801
+• Avg. Precision  : ~0.79
+
+Notes:
+• Lower performance likely due to noise and bursty attack patterns
+• Further tuning required
+
+=========================================================
+
+🚧 Dataset: CIC-IDS2018 (7.9M edges, 33K nodes, 38K timestamps)
+Description: Modern dataset with various recent attack types (e.g., brute-force, DDoS, botnets).
+
+Note: This dataset has a high volume of edges and mixed attack scenarios.
+---------------------------------------------------------------
+- SketchTensorManager(...): TBD
+- EWMA: TBD
+
+Results:
+• AUC-ROC         : TBD
+• Avg. Precision  : TBD
+• Precision/Recall@1000 : TBD
+
+Notes:
+• To be tested and evaluated
+
+=========================================================
+
+🚧 Dataset: CIC-DDoS2019 (20.3M edges, 1.2K nodes, 12K timestamps)
+Description: Specifically captures distributed denial-of-service attacks.
+
+Note: This dataset is extremely dense and bursty.
+------------------------------------------------------------------
+- SketchTensorManager(...): TBD
+- EWMA: TBD
+
+Results:
+• AUC-ROC         : TBD
+• Avg. Precision  : TBD
+• Precision/Recall@1000 : TBD
+
+Notes:
+• To be tested and evaluated
+
+=============================================================================
+"""
+

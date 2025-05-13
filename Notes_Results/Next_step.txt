@@ -1,0 +1,64 @@
+# Save the recommendations and next steps into a .txt file
+
+next_steps_text = """
+=============================================================================
+NEXT STEPS & RECOMMENDATIONS
+=============================================================================
+
+✅ Immediate Next Steps
+-----------------------------------------------------------------------------
+
+1. Test Remaining Datasets (from AnoEdge paper):
+   - CIC-IDS2018: 7.9M edges, 33K nodes, 38K timestamps
+     • Diverse attack types (brute-force, DDoS, botnets)
+   - CIC-DDoS2019: 20.3M edges, 1.3K nodes, 12K timestamps
+     • Dense and bursty, best for stress-testing streaming algorithms
+
+   ➤ Evaluate GraphSketchTensor + EWMA on these datasets.
+   ➤ Compare against MIDAS-R and AnoEdge baselines.
+
+2. Parameter Sweep for ISCX-IDS2012:
+   - Current AUC ~0.8433, AP ~0.2198 (still below SOTA)
+   - Suggested Tweaks:
+     • Lower EWMA alpha: try 0.6–0.75
+     • Increase sketch width: 1000–2000 columns
+     • Increase Step Size: 20.0 or use dynamic step based on edge rate
+     • Finer time granularity: timestamp / 500
+
+3. Add Dynamic Step Size Logic:
+   Example:
+     float dynamicStep = (isHighFrequency ? 15.0f : 10.0f);
+   - Define `isHighFrequency` using timestamp delta or edge rate tracking.
+
+-----------------------------------------------------------------------------
+
+📈 Optional Improvements
+-----------------------------------------------------------------------------
+
+- Log-scaled anomaly scores:
+  • Use log(1 + score) before applying EWMA to reduce burst spikes
+
+- Window-aware EWMA:
+  • Reset or re-tune EWMA α at the beginning of new time windows
+
+- Visualization:
+  • Generate heatmaps from SketchTensor matrices
+  • Helpful for paper illustrations and intuition
+
+-----------------------------------------------------------------------------
+
+📝 For Research Paper / Thesis
+-----------------------------------------------------------------------------
+
+- Emphasize that your method:
+  • Outperforms MIDAS-R on DARPA (0.9565 AUC vs. 0.953)
+  • Requires no submatrix search (unlike AnoEdge-G/L)
+  • Is lightweight and streaming-friendly (few rows, low memory)
+
+- Scalability Highlight:
+  • 4.5M edges in ~2 seconds (DARPA)
+  • Ideal for real-time anomaly detection
+
+=============================================================================
+"""
+
