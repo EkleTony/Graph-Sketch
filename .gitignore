@@ -3,7 +3,7 @@
 # ========================
 
 # macOS system files
-.DS_Store
+#.DS_Store
 
 # Python cache
 __pycache__/
@@ -11,11 +11,11 @@ __pycache__/
 *.pkl
 
 # Jupyter notebook checkpoints
-.ipynb_checkpoints/
+#.ipynb_checkpoints/
 
 # Binary and debug files
 graphsketch
-*.dSYM/
+#*.dSYM/
 
 # Logs and intermediate output
 *.log
@@ -30,7 +30,12 @@ roc_data.txt
 *.swp
 
 # Project-specific: ignore raw datasets
-data/
+# Ignore everything under data/
+data/*
+
+# But do not ignore DARPA folder
+!data/DARPA/
+!data/DARPA/**
 
 # Ignore build system files if any
 build/
