@@ -29,7 +29,7 @@ int main()
     auto startProcessingTime = high_resolution_clock::now();
 
     // ✅ Initialize tensor-based sketch manager
-    SketchTensorManager sketchTensor(10, 1300, 0.95f, 10.0f);
+    SketchTensorManager sketchTensor(10, 300, 0.95f, 10.0f);
     // c = number of hash rows (r)  // ISCX-ids (3, 800, 0.98, 15.0) and alpah = 0.85 and auc = 0.843
     // c = umber of columns (c)  
     // 0.95f =decay factor
@@ -43,9 +43,9 @@ int main()
     // std::ifstream file("data/CIC_IDS2017/tuesday_edges.txt"); // CIC-IDS 2017 (Tuesday)
     // std::ifstream file("data/CIC_IDS2017/combined_edges.txt");// CIC-IDS 2017 (All)
     // std::ifstream file("data/dataset/ctu_edges.csv");         // CTU-13
-    std::ifstream file("data/IDS2018/Data.csv");         // IDS-2018
-    // std::ifstream file("data/DDOS2019/Data.csv");         // DDOS 2019
-
+    // std::ifstream file("data/IDS2018/Data.csv");         // IDS-2018
+    std::string filepath = "data/DDOS2019/Data.csv";  // CIC-DDOS 2019
+    std::ifstream file(filepath);
     if (!file.is_open())
     {
         std::cerr << "Error: Could not open dataset file." << std::endl;
@@ -53,7 +53,24 @@ int main()
     }
     std::cout << "Dataset file opened successfully." << std::endl;
 
-    // ✅ Prepare output file for anomaly scores
+    // Automatically extract dataset name from path
+    
+    // =============== Extract dataset name for logging ================
+    std::string datasetName = "Unknown Dataset";
+    size_t start = filepath.find("data/");
+    if (start != std::string::npos) {
+        start += 5;
+        size_t end = filepath.find("/", start);
+        if (end != std::string::npos) {
+            datasetName = filepath.substr(start, end - start);
+        }
+    }
+    if (datasetName == "DDOS2019") datasetName = "CIC-DDoS2019";
+    else if (datasetName == "CIC_IDS2018") datasetName = "CIC-IDS2018";
+    else if (datasetName == "ISCX_IDS2012") datasetName = "ISCX-IDS2012";
+    else if (datasetName == "DARPA") datasetName = "DARPA";
+
+    // ===================== Prepare output file for anomaly scores ==============
     std::ofstream scoreFile("score.txt");
     if (!scoreFile.is_open())
     {
@@ -65,11 +82,11 @@ int main()
     std::string line;
     int edgeCount = 0;
 
-    // ✅ EWMA parameters (temporal smoothing)
+    // ✅ ================= EWMA parameters (temporal smoothing)
     float alpha = 0.95f;         // EWMA smoothing factor // 0.85 for darpa
     float ema_score = 0.1f;     // Current EWMA score
 
-    // ✅ Read and process each edge (src, dst, timestamp)
+    // ✅ =============Read and process each edge (src, dst, timestamp)
     while (std::getline(file, line)) {
         std::istringstream iss(line);
         char comma;
@@ -109,7 +126,7 @@ int main()
     file.close();
     scoreFile.close();
 
-    std::cout << "\nFinished processing " << edgeCount << " edges." << std::endl;
+    std::cout << "\nFinished processing " << edgeCount << " edges for " << datasetName << "." << std::endl;
     std::cout << "Graph Processing time: " << processingDuration.count() << " seconds." << std::endl;
     std::cout << "Anomaly scores saved to 'score.txt'." << std::endl;
 
@@ -133,10 +150,10 @@ int main()
 
 
     // IDS-2018
-    int eval_status = system("python3 src/GraphSketch_eval.py score.txt data/IDS2018/Label.csv");
+    // int eval_status = system("python3 src/GraphSketch_eval.py score.txt data/IDS2018/Label.csv");
 
     // DDOS-2019
-    // int eval_status = system("python3 src/GraphSketch_eval.py score.txt data/DDOS2019/Label.csv");
+    int eval_status = system("python3 src/GraphSketch_eval.py score.txt data/DDOS2019/Label.csv");
 
     if (eval_status != 0)
     {
