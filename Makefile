@@ -10,7 +10,15 @@ CXXFLAGS = -std=c++17 -O2 -Wall
 INCLUDES = -Iinclude
 
 # Source files
+<<<<<<< HEAD
 SRC = src/main.cpp src/GraphSketchTensor.cpp
+=======
+<<<<<<< HEAD
+SRC = src/main.cpp
+=======
+SRC = src/main.cpp src/GraphSketchTensor.cpp
+>>>>>>> e0f993a (local changes before pulling)
+>>>>>>> 724517a (adding darpa data)
 
 # Output executable name
 TARGET = graphsketch
