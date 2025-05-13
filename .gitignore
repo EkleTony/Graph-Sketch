@@ -24,7 +24,7 @@ pr_data.txt
 roc_data.txt
 
 # VSCode project settings
-.vscode/
+#.vscode/
 
 # Temporary or swap files
 *.swp
@@ -37,7 +37,7 @@ data/*
 !data/DARPA/
 !data/DARPA/**
 
-# Ignore build system files if any
-build/
+# Ignore build system files if any#
+#build/
 *.o
 *.out

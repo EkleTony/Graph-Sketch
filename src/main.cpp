@@ -29,7 +29,7 @@ int main()
     auto startProcessingTime = high_resolution_clock::now();
 
     // ✅ Initialize tensor-based sketch manager
-    SketchTensorManager sketchTensor(3, 800, 0.98f, 15.0f);
+    SketchTensorManager sketchTensor(10, 1300, 0.95f, 10.0f);
     // c = number of hash rows (r)  // ISCX-ids (3, 800, 0.98, 15.0) and alpah = 0.85 and auc = 0.843
     // c = umber of columns (c)  
     // 0.95f =decay factor
@@ -38,11 +38,13 @@ int main()
 
     // ✅ Open dataset (you can switch by commenting/uncommenting below)
     // std::ifstream file("data/DARPA/darpa_edges.txt");           // ✅ DARPA
-    std::ifstream file("data/ISCX_IDS2012/data_ids2012.csv"); // ISCX-IDS 2012
+    // std::ifstream file("data/ISCX_IDS2012/data_ids2012.csv"); // ISCX-IDS 2012
     // std::ifstream file("data/CIC_IDS2017/friday_edges.txt");  // CIC-IDS 2017 (Friday)
     // std::ifstream file("data/CIC_IDS2017/tuesday_edges.txt"); // CIC-IDS 2017 (Tuesday)
     // std::ifstream file("data/CIC_IDS2017/combined_edges.txt");// CIC-IDS 2017 (All)
     // std::ifstream file("data/dataset/ctu_edges.csv");         // CTU-13
+    std::ifstream file("data/IDS2018/Data.csv");         // IDS-2018
+    // std::ifstream file("data/DDOS2019/Data.csv");         // DDOS 2019
 
     if (!file.is_open())
     {
@@ -64,7 +66,7 @@ int main()
     int edgeCount = 0;
 
     // ✅ EWMA parameters (temporal smoothing)
-    float alpha = 0.85f;         // EWMA smoothing factor // 0.85 for darpa
+    float alpha = 0.95f;         // EWMA smoothing factor // 0.85 for darpa
     float ema_score = 0.1f;     // Current EWMA score
 
     // ✅ Read and process each edge (src, dst, timestamp)
@@ -121,13 +123,20 @@ int main()
     // int eval_status = system("python3 src/GraphSketch_eval.py score.txt data/DARPA/darpa_ground_truth.csv");
 
     // 2. ISCX-IDS 2012
-    int eval_status = system("python3 src/GraphSketch_eval.py score.txt data/ISCX_IDS2012/label_ids2012.csv");
+    //int eval_status = system("python3 src/GraphSketch_eval.py score.txt data/ISCX_IDS2012/label_ids2012.csv");
 
     // 3. cic-IDS 2017
     // int eval_status = system("python3 src/GraphSketch_eval.py score.txt data/CIC_IDS2017/friday_labels.csv");
 
     // CTU-13
     //int eval_status = system("python3 src/GraphSketch_eval.py score.txt data/dataset/ctu_labels.csv");
+
+
+    // IDS-2018
+    int eval_status = system("python3 src/GraphSketch_eval.py score.txt data/IDS2018/Label.csv");
+
+    // DDOS-2019
+    // int eval_status = system("python3 src/GraphSketch_eval.py score.txt data/DDOS2019/Label.csv");
 
     if (eval_status != 0)
     {
