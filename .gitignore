@@ -1,0 +1,38 @@
+# ========================
+# Git Ignore for GraphSketch
+# ========================
+
+# macOS system files
+.DS_Store
+
+# Python cache
+__pycache__/
+*.py[cod]
+*.pkl
+
+# Jupyter notebook checkpoints
+.ipynb_checkpoints/
+
+# Binary and debug files
+graphsketch
+*.dSYM/
+
+# Logs and intermediate output
+*.log
+score.txt
+pr_data.txt
+roc_data.txt
+
+# VSCode project settings
+.vscode/
+
+# Temporary or swap files
+*.swp
+
+# Project-specific: ignore raw datasets
+data/
+
+# Ignore build system files if any
+build/
+*.o
+*.out
