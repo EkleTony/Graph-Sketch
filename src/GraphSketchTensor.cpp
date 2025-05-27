@@ -16,7 +16,7 @@ namespace GraphSketch {
 
     // Helper: bin timestamp into a 5-minute window
     int getTimeWindow(int timestamp) {
-        return timestamp / 300; // 250 best for cic-ids // darpa =40 // ids-18 = 300
+        return timestamp / 300; // 250 best for cic-ids2012 // darpa =40 // ids-18 = 300 AND 2019 too
     }
 
     // ✅ Add edge to sketch (safe against default construction)

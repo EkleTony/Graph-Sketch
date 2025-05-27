@@ -29,22 +29,23 @@ int main()
     auto startProcessingTime = high_resolution_clock::now();
 
     // ✅ Initialize tensor-based sketch manager
-    SketchTensorManager sketchTensor(10, 300, 0.95f, 10.0f);
+    // DARPA (2, 10, 0.95f, 15.0f) with 
+    SketchTensorManager sketchTensor(10, 1500, 0.90f, 15.0f); 
     // c = number of hash rows (r)  // ISCX-ids (3, 800, 0.98, 15.0) and alpah = 0.85 and auc = 0.843
-    // c = umber of columns (c)  
-    // 0.95f =decay factor
+    // c = umber of columns (c)     // cic-2019 (10, 300, 0.95, 10.0f) with 0.9991 AUc
+    // 0.95f =decay factor              /// (10, 1600, 0.95f, 10.0f) CIC-2018
     // step  = how much we increment anomaly score per sketch update
 
 
     // ✅ Open dataset (you can switch by commenting/uncommenting below)
-    // std::ifstream file("data/DARPA/darpa_edges.txt");           // ✅ DARPA
-    // std::ifstream file("data/ISCX_IDS2012/data_ids2012.csv"); // ISCX-IDS 2012
-    // std::ifstream file("data/CIC_IDS2017/friday_edges.txt");  // CIC-IDS 2017 (Friday)
-    // std::ifstream file("data/CIC_IDS2017/tuesday_edges.txt"); // CIC-IDS 2017 (Tuesday)
-    // std::ifstream file("data/CIC_IDS2017/combined_edges.txt");// CIC-IDS 2017 (All)
-    // std::ifstream file("data/dataset/ctu_edges.csv");         // CTU-13
-    // std::ifstream file("data/IDS2018/Data.csv");         // IDS-2018
-    std::string filepath = "data/DDOS2019/Data.csv";  // CIC-DDOS 2019
+    // std::string filepath  = "data/DARPA/darpa_edges.txt";           // ✅ 1.  DARPA
+    //std::string filepath  = "data/ISCX_IDS2012/data_ids2012.csv";    //    2.  ISCX-IDS 2012
+    // std::string filepath  = "data/CIC_IDS2017/friday_edges.txt";  // CIC-IDS 2017 (Friday)
+    // std::string filepath  = "data/CIC_IDS2017/tuesday_edges.txt"; // CIC-IDS 2017 (Tuesday)
+    // std::string filepath  = "data/CIC_IDS2017/combined_edges.txt";// CIC-IDS 2017 (All)
+    // std::string filepath  = "data/ctu_dataset/ctu_edges.csv";         // CTU-13
+    // std::string filepath  = "data/IDS2018/Data.csv";            //       3.  IDS-2018
+    std::string filepath = "data/DDOS2019/Data.csv";               //       4.  CIC-DDOS 2019
     std::ifstream file(filepath);
     if (!file.is_open())
     {
@@ -84,7 +85,7 @@ int main()
 
     // ✅ ================= EWMA parameters (temporal smoothing)
     float alpha = 0.95f;         // EWMA smoothing factor // 0.85 for darpa
-    float ema_score = 0.1f;     // Current EWMA score
+    float ema_score = 0.5f;     // Current EWMA score
 
     // ✅ =============Read and process each edge (src, dst, timestamp)
     while (std::getline(file, line)) {
@@ -137,22 +138,21 @@ int main()
     // ✅ Run Python evaluation (edit label file path if switching dataset)
 
     // 1. DARPA
-    // int eval_status = system("python3 src/GraphSketch_eval.py score.txt data/DARPA/darpa_ground_truth.csv");
+    //int eval_status = system("python3 src/GraphSketch_eval.py score.txt data/DARPA/darpa_ground_truth.csv");
 
     // 2. ISCX-IDS 2012
     //int eval_status = system("python3 src/GraphSketch_eval.py score.txt data/ISCX_IDS2012/label_ids2012.csv");
 
-    // 3. cic-IDS 2017
+    // cic-IDS 2017
     // int eval_status = system("python3 src/GraphSketch_eval.py score.txt data/CIC_IDS2017/friday_labels.csv");
-
     // CTU-13
-    //int eval_status = system("python3 src/GraphSketch_eval.py score.txt data/dataset/ctu_labels.csv");
+    //int eval_status = system("python3 src/GraphSketch_eval.py score.txt data/ctu_dataset/ctu_labels.csv");
 
 
-    // IDS-2018
+    // 3.  IDS-2018
     // int eval_status = system("python3 src/GraphSketch_eval.py score.txt data/IDS2018/Label.csv");
 
-    // DDOS-2019
+    // 4.  DDOS-2019
     int eval_status = system("python3 src/GraphSketch_eval.py score.txt data/DDOS2019/Label.csv");
 
     if (eval_status != 0)
@@ -172,8 +172,8 @@ int main()
 
     std::cout << "\n========= Timing Summary =========" << std::endl;
     std::cout << "Graph Processing Time: " << processingDuration.count() << " seconds" << std::endl;
-    std::cout << "Evaluation Time: " << evalDuration.count() << " seconds" << std::endl;
-    std::cout << "TOTAL Time (Processing + Evaluation): " << totalDuration.count() << " seconds" << std::endl;
+    //std::cout << "Evaluation Time: " << evalDuration.count() << " seconds" << std::endl;
+    //std::cout << "TOTAL Time (Processing + Evaluation): " << totalDuration.count() << " seconds" << std::endl;
     std::cout << "===================================" << std::endl;
 
     return 0;
