@@ -2,7 +2,7 @@
 
 ## Overview
 
-GraphSketch is a memory-efficient anomaly detection system for **dynamic graph streams**. It leverages **Count-Min Sketch with Conservative Update (CMSCU)** for real-time anomaly detection.
+GraphSketch is a memory-efficient anomaly detection system for **dynamic graph streams**. It leverages **Count-Min Sketch with Conservative Update (CMSCU)** for real-time anomaly detection.  [Read the Paper](https://arxiv.org/pdf/2509.11633)
 
 ## Features
 
@@ -59,7 +59,7 @@ Apache License 2.0
 ## References & Acknowledgments
 
 GraphSketch is inspired by **MIDAS (Microcluster-Based Detector of Anomalies in Edge Streams)**, an anomaly detection framework for streaming graphs.
- 📄 [Read the Paper](https://arxiv.org/pdf/2009.08452)
+ 📄 [Read the Paper](https://arxiv.org/pdf/2009.08452)       
 
 ### 📂 GitHub Repository
 
