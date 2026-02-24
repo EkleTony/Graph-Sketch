@@ -8,7 +8,7 @@ This work was presented and published at **IEEE ICKG 2025**.
 
 ## GraphSketch Framework Overview
 
-![GraphSketch Framework](Graphsketch_framework.jpg)
+![GraphSketch Framework](GraphSketch_framework.jpg)
 
 *Figure 1: End-to-end pipeline for streaming edge ingestion, multi-layer hashing, 3D tensor sketch construction (CMSCU), temporal decay with sliding windows, and Bayesian threshold-based anomaly detection.*
 
