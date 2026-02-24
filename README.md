@@ -1,16 +1,21 @@
 # GraphSketch: Real-Time Anomaly Detection in Dynamic Graphs
 
-## Overview
-
 GraphSketch is a memory-efficient anomaly detection system for **dynamic graph streams**. It leverages **Count-Min Sketch with Conservative Update (CMSCU)** to enable scalable, real-time anomaly detection under strict memory constraints.
 
 This work was presented and published at **IEEE ICKG 2025**.
 
 📄 [Read the Paper (arXiv)](https://arxiv.org/pdf/2509.11633)
+
+## GraphSketch Framework Overview
+
+![GraphSketch Framework](graphsketch_framework.jpg)
+
+*Figure 1: End-to-end pipeline for streaming edge ingestion, multi-layer hashing, 3D tensor sketch construction (CMSCU), temporal decay with sliding windows, and Bayesian threshold-based anomaly detection.*
+
 ## Features
 
 - **Streaming anomaly detection** for large graphs
-- **Low-memory footprint** with Count-Min Sketch
+- **Low-memory footprint** using Count-Min Sketch
 - **Scalable & efficient** processing
 - **Flexible dataset support**, including DARPA and custom data.
 
